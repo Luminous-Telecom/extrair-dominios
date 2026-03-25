@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Ambiente virtual
+.venv/
+venv/
+env/
+
+# Saida do script / ficheiros gerados
+dominios_extraidos/
+
+# PDFs — nunca enviar para o repositorio
+*.pdf
+*.PDF
+
+# IDE / editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Ambiente / segredos
+.env
+.env.*
