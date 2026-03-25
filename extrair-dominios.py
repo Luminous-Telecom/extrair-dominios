@@ -1,5 +1,6 @@
 """
-Extrai texto da ultima coluna via OCR (OpenCV + Tesseract).
+Extrai texto apenas da ultima coluna da tabela (OCR: OpenCV + Tesseract).
+Nao processa outras colunas nem texto fora da grelha detetada.
 Render de PDF com PyMuPDF (nao requer pdf2image nem Poppler).
 """
 import argparse
@@ -233,7 +234,9 @@ def extract_and_save(pdf_path, output_image_path, output_txt_path, max_pages=0):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="OCR ultima coluna (OpenCV + Tesseract)")
+    parser = argparse.ArgumentParser(
+        description="OCR apenas na ultima coluna da tabela (OpenCV + Tesseract)."
+    )
     parser.add_argument("pdf", help="Caminho do PDF")
     parser.add_argument(
         "--saida",

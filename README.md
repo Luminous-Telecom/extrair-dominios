@@ -1,6 +1,15 @@
 # Extrair domínios (OCR na última coluna)
 
-Script em Python que converte cada página de um PDF em imagem, tenta detetar a tabela (OpenCV), corre **OCR (Tesseract)** na região da **última coluna** e guarda os textos encontrados (ex.: domínios) num `.txt` e num `.png` de resumo.
+Script em Python que converte cada página de um PDF em imagem, tenta detetar a **tabela** (OpenCV) e corre **OCR (Tesseract)** **apenas na região da última coluna** dessa tabela — **não** extrai texto das outras colunas nem fora da grelha.
+
+O resultado são os textos lidos nessa coluna (ex.: domínios ou IPs), guardados num `.txt` e num `.png` de resumo.
+
+### Âmbito
+
+| Faz | Não faz |
+|-----|---------|
+| OCR na **última coluna** da tabela detetada | Extração das colunas do meio ou da primeira coluna |
+| Uma tabela por página (quando a deteção encontra grelha) | Corpo do documento fora da tabela |
 
 ## Requisitos
 
@@ -48,14 +57,16 @@ pip install -r requirements.txt
 python extrair-dominios.py ".\documento.pdf"
 ```
 
+*(O PDF deve conter tabelas com **várias colunas**; só a **última coluna** é processada.)*
+
 ### Saída (por defeito na pasta `dominios_extraidos/`)
 
 | Ficheiro | Conteúdo |
 |----------|----------|
-| `{nome_do_pdf}_ocr.txt` | Uma linha por texto extraído (só o conteúdo, sem número de página). |
+| `{nome_do_pdf}_ocr.txt` | Uma linha por texto extraído **da última coluna** (só o conteúdo, sem número de página). |
 | `{nome_do_pdf}_ocr.png` | Imagem com as mesmas linhas de texto. |
 
-No **final da execução** no terminal aparece o resumo das **páginas onde houve conteúdo** extraído.
+No **final da execução** no terminal aparece o resumo das **páginas onde houve conteúdo** na última coluna.
 
 ### Opções
 
@@ -69,7 +80,7 @@ No **final da execução** no terminal aparece o resumo das **páginas onde houv
 
 ```powershell
 # PDF completo
-python extrair-dominios.py ".\Ofício nº 039-2026-Del. 18.03.2026.pdf"
+python extrair-dominios.py ".\meu-documento.pdf"
 
 # Só as primeiras 20 páginas
 python extrair-dominios.py ".\documento.pdf" --max-paginas 20
@@ -84,7 +95,8 @@ python extrair-dominios.py ".\documento.pdf" --tesseract "C:\Program Files\Tesse
 ## Notas
 
 - O processamento de **muitas páginas** com OCR pode ser **lento**.
-- Se aparecer `Nenhuma tabela detectada` numa página, a deteção automática da grelha (OpenCV) não encontrou linhas; nessa página não há OCR da última coluna.
+- Se aparecer `Nenhuma tabela detectada` numa página, a deteção automática da grelha (OpenCV) não encontrou linhas; nessa página **não** há OCR da última coluna.
+- O script **não** foi pensado para PDFs sem tabela clara nem para extrair a folha inteira — só a **última coluna** após detetar a tabela.
 - Se o pacote de idioma **português** não estiver instalado no Tesseract, o script tenta **inglês** (`eng`) como alternativa.
 
 ## Estrutura relevante
