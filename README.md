@@ -94,4 +94,9 @@ extrair-dominios/
   extrair-dominios.py   # script principal
   requirements.txt
   README.md
+  LICENSE
 ```
+
+## Licença
+
+Ver ficheiro [LICENSE](LICENSE) (Apache 2.0).
